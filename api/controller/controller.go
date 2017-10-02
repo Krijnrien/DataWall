@@ -29,7 +29,7 @@ func RegisterEndPoints() {
  */
 func getLimit(header *http.Header) int {
 	// Get header limit from the HTTP request
-	headerLimit := header.Get(headerLimit)
+	var headerLimit string = header.Get(headerLimit)
 	log.WithFields(log.Fields{
 		"limit": headerLimit,
 	}).Debug("Header limit of HTTP request")

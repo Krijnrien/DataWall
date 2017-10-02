@@ -13,8 +13,7 @@ import (
 func getAllLocations(writer http.ResponseWriter, request *http.Request) {
 	log.Debug("Fetching and attempting to serve all devices!")
 	// Get limit for maximum records to fetch
-	limit := getLimit(&request.Header)
-
+	var limit int = getLimit(&request.Header)
 	// Fetch list of all devices from database with given limit
 	data := cassandra.GetDevices(limit)
 

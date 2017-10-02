@@ -12,7 +12,7 @@ import (
  * @param limit: Amount of rows you want to limit your request to. Must be positive.
  * @return List of device locations by struct Locations.
  */
-func GetDevices(limit uint) []Device {
+func GetDevices(limit int) []Device {
 	var locList []Device          // Predeclared list of Device struct.
 	m := map[string]interface{}{} // What is this?
 
