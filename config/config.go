@@ -1,10 +1,10 @@
 package config
 
 import (
-	"sync"          // Config get() func only required to run once
 	"encoding/json" // Serializing JSON configuration file to struct
 	"os"            // Open configuration file
 	"path/filepath" // Define config file path
+	"sync"          // Config get() func only required to run once
 
 	log "github.com/sirupsen/logrus" // Logging errors
 )
@@ -18,6 +18,10 @@ type Configuration struct {
 	ApiPort   uint8  // The port on which the API will run. Always positive and below 65535
 	Logging   bool   // Whether to display logs or not
 	Token     string // Auth token from Fontys API
+
+	ApiDomain      string // Domain of fontys API
+	ApiProtocol    string // Protocol to reach Fontys API
+	ApiDevicesPath string // Path from ApiDomain to Fontys ConnectedDevices API
 }
 
 const configPath = "../DataWall/config/config.json"
