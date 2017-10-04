@@ -13,7 +13,7 @@ go:
 # code in vendor/
 #install: true
 
-go_import_path: github.com/krijnrien/DataWall
+#go_import_path: github.com/krijnrien/DataWall
 
 matrix:
   # It's ok if our code fails on unstable development versions of Go.
@@ -25,7 +25,7 @@ matrix:
 
 # Don't email me the results of the test runs.
 notifications:
-  email: true
+  email: false
 
 # Anything in before_script: that returns a nonzero exit code will
 # flunk the build and immediately stop. It's sorta like having
