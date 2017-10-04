@@ -13,7 +13,7 @@ go:
 # code in vendor/
 #install: true
 
-go_import_path: log "github.com/krijnrien/DataWall"
+go_import_path: github.com/krijnrien/DataWall
 
 matrix:
   # It's ok if our code fails on unstable development versions of Go.
