@@ -3,9 +3,11 @@ package controller
 import (
 	"net/http"
 	"strconv"
-	"path/filepath"
+	"time"
 
 	log "github.com/sirupsen/logrus" // Logging library
+	"DataWall/api/cache"
+	"path/filepath"
 )
 
 const defaultLimit int = 50         // Default limit if none could be found in header.
@@ -15,9 +17,18 @@ const defaultResponse string = "{}" // Empty response body predefined.
 /** RegisterEndPoints
  * Set all endpoints of webserver to listen and serve to.
  */
+var storage Storage
+
+type Storage interface {
+	Get(key string) []byte
+	Set(key string, content []byte, duration time.Duration)
+}
+
 func RegisterEndPoints() {
+	// Instantiate type of cache storage. Using memory cache.
+	storage = cache.NewMemCache()
 	// GET: /
-	http.HandleFunc("/", root)
+	http.Handle("/", caching("20s", root))
 	// GET: /data
 	http.HandleFunc("/data", getAllLocations)
 }

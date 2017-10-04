@@ -29,5 +29,5 @@ func main() {
 
 	contextLogger.Info("Starting web server!")
 	// Start web server with config port. No handler is set.
-	http.ListenAndServe(fmt.Sprint(":", cfg.ApiPort), nil)
+	http.ListenAndServe(fmt.Sprint(":8081"), nil)
 }
