@@ -15,12 +15,12 @@ import (
 const interval time.Duration = 20000 * time.Millisecond // Time with 20 seconds interval
 
 //TODO
- /** endpointPolling
- *
- */
+/** endpointPolling
+*
+*/
 func EndpointPolling() {
 	log.Info("Starting data-gatherer application!")
-
+	getDevicesLocationsData(time.Now())
 	// call getDevicesLocationsData func every tick predefined by interval var.
 	doEvery(interval, getDevicesLocationsData)
 }
