@@ -73,7 +73,10 @@ func getDevicesLocationsData(currentTime time.Time) {
 	}
 
 	// Send devices list to insert func to be inserted into the DB.
-	cassandra.InsertDevices(devices)
+	go cassandra.InsertDevices(devices)
+
+	// Split data set into each floor
+	// Send data to pusher
 
 	log.WithFields(log.Fields{
 		"End time": time.Now(),
