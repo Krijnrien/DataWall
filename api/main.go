@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"fmt"
@@ -14,7 +14,7 @@ import (
 /** API package main
  * Starts web server and listens on port for requests
  */
-func main() {
+func Server() {
 	// Set all routes for web server to listen to
 	controller.RegisterEndPoints()
 	// Set configuration var for Ip Address and port.

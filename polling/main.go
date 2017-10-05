@@ -1,4 +1,4 @@
-package main
+package polling
 
 import (
 	"encoding/json"
@@ -15,14 +15,14 @@ import (
 const interval time.Duration = 20000 * time.Millisecond // Time with 20 seconds interval
 
 //TODO
-/** Data-gatherer main
+ /** endpointPolling
  *
  */
-func main() {
+func EndpointPolling() {
 	log.Info("Starting data-gatherer application!")
 
-	// call getDataFromApi func every tick predefined by interval var.
-	doEvery(interval, getDataFromApi)
+	// call getDevicesLocationsData func every tick predefined by interval var.
+	doEvery(interval, getDevicesLocationsData)
 }
 
 /** do Every //TODO Func name not clear enough
@@ -36,11 +36,11 @@ func doEvery(interval time.Duration, repeatFunction func(time.Time)) {
 	}
 }
 
-/** getDataFromApi
+/** getDevicesLocationsData
  * Get Fontys authentication token. Connect to devices location endpoint, read & serialize response.
  * currenTime //TODO Unused parameter? NO!
  */
-func getDataFromApi(currentTime time.Time) {
+func getDevicesLocationsData(currentTime time.Time) {
 	log.WithFields(log.Fields{
 		"Start time": time.Now(),
 	}).Debug("Retrieving data from Fontys API")
