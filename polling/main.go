@@ -5,14 +5,12 @@ import (
 	"io/ioutil"
 	"time"
 
-	"DataWall/cassandra"
 	"DataWall/config"
-
+	"DataWall/data"
 	log "github.com/sirupsen/logrus" // Logging library
 	"golang.org/x/oauth2"            // Authentication library
+	"DataWall/cassandra"
 )
-
-const interval time.Duration = 20000 * time.Millisecond // Time with 20 seconds interval
 
 //TODO
 /** endpointPolling
@@ -24,6 +22,9 @@ func EndpointPolling() {
 	// call getDevicesLocationsData func every tick predefined by interval var.
 	doEvery(interval, getDevicesLocationsData)
 }
+
+var Devices *[]cassandra.Device
+const interval time.Duration = 20000 * time.Millisecond // Time with 20 seconds interval
 
 /** do Every //TODO Func name not clear enough
 * Timer to repeat func every given amount of time. //TODO Does this have to be a seperate func? Can it not be recursive?
@@ -41,6 +42,7 @@ func doEvery(interval time.Duration, repeatFunction func(time.Time)) {
  * currenTime //TODO Unused parameter? NO!
  */
 func getDevicesLocationsData(currentTime time.Time) {
+
 	log.WithFields(log.Fields{
 		"Start time": time.Now(),
 	}).Debug("Retrieving data from Fontys API")
@@ -50,7 +52,6 @@ func getDevicesLocationsData(currentTime time.Time) {
 	devicesEndpointUrl := cfg.ApiProtocol + cfg.ApiDomain + cfg.ApiDevicesPath // Fontys endpoint url
 
 	// TODO Should this variable be predefined?
-	var devices []cassandra.Device
 
 	// Retrieve Token from Config and set in proper struct
 	tokenSource := &TokenSource{
@@ -63,21 +64,18 @@ func getDevicesLocationsData(currentTime time.Time) {
 	body, _ := ioutil.ReadAll(resp.Body)
 	defer resp.Body.Close()
 
+//	DevicesSet.Mutex.RLock()
 	// Serialize JSON response to device struct.
-	err := json.Unmarshal([]byte(string(body)), &devices)
+	err := json.Unmarshal([]byte(string(body)), &Devices)
 	if err != nil {
 		// TODO Handle error more gracefully!
 		log.WithFields(log.Fields{
 			"End time": err.Error(),
 		}).Error("Could not serialize JSON response to device struct")
 	}
+	//DevicesSet.Mutex.RUnlock()
 
-	// Send devices list to insert func to be inserted into the DB.
-	go cassandra.InsertDevices(devices)
-
-	// Split data set into each floor?
-	// Send data to pusher
-	Pusher()
+	go data.SerializeData(Devices)
 
 	log.WithFields(log.Fields{
 		"End time": time.Now(),

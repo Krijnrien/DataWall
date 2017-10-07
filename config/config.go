@@ -22,6 +22,11 @@ type Configuration struct {
 	ApiDomain      string // Domain of fontys API
 	ApiProtocol    string // Protocol to reach Fontys API
 	ApiDevicesPath string // Path from ApiDomain to Fontys ConnectedDevices API
+
+	Ripple struct {
+		IP   string `json:"ip"`
+		Port int    `json:"port"`
+	} `json:"cluster"`
 }
 
 const configPath = "../DataWall/config/config.json"
