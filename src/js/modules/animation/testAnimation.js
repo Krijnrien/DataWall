@@ -29,9 +29,20 @@ export default class TestAnimation {
         if (!this.readyToShow) return;
 
         p5.image(this.images[this.floor], 0, 0, window.innerWidth, window.innerHeight)
-
+        
+        
+        
         this.devices.forEach(device => {
-            p5.ellipse(device.x, device.y, 7)
+
+            if (device.userType === 1) {
+                p5.fill(255, 204, 0)
+                p5.ellipse(device.x, device.y, 10)
+            } else {
+                p5.fill(64,224,208, 75)
+                p5.ellipse(device.x, device.y, 7)
+            }
+
+            
         });
     }
 
