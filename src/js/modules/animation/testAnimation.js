@@ -1,25 +1,34 @@
 import Device from '../class/device.js'
 
-const canvasWidth = p5.windowWidth;
-const canvasHeight = p5.windowHeight;
+let lastTime = 0;
 
 export default class TestAnimation {
 
-    constructor(image) {
+    constructor(images) {
         this.devices = [];
         this.originalData = [];
         this.readyToShow = false;
-        this.image = image;
+        this.images = images;
+        this.floor = -1;
     }
 
     update() {
+        let currentTime = new Date().getTime();
 
+        if (currentTime - lastTime > 2000) {
+
+            this.floor = ++this.floor % this.images.length;
+
+            this.devices = this.originalData.filter(d => d.floor === this.floor);
+
+            lastTime = currentTime;
+        }
     }
 
     show() {
         if (!this.readyToShow) return;
 
-        p5.image(this.image, 0, 0, window.innerWidth, window.innerHeight)
+        p5.image(this.images[this.floor], 0, 0, window.innerWidth, window.innerHeight)
 
         this.devices.forEach(device => {
             p5.ellipse(device.x, device.y, 7)
@@ -28,8 +37,9 @@ export default class TestAnimation {
 
     setData(data) {
         this.originalData = data;
-        this.devices = this.originalData.filter(d => d.floor === 0); // Gefilterd op beganegrond
+        this.devices = this.originalData.filter(d => d.floor === this.floor);
 
+        lastTime = new Date().getTime();
         this.readyToShow = true;
     }
 }

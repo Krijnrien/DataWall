@@ -25,9 +25,13 @@ const sketch = (p5) => {
     canvas.parent('sketch');
     p5.frameRate(24);
 
-    animation = new TestAnimation(p5.loadImage("assets/img/floor0.png"));
+    animation = new TestAnimation(
+      [0, 1, 2, 3, 4].map(n => p5.loadImage(`assets/img/floor${n}.png`))
+    );
 
     service = new MqttSerivce(
+
+      // This function is called when new data arrives.
       data => {
         let maxX = Math.max(...data.map(d => d.x))
         let maxY = Math.max(...data.map(d => d.y))
@@ -43,6 +47,8 @@ const sketch = (p5) => {
           )
         );
       },
+
+      // This function is called when an error occures while retrieving the data.
       error => console.error(error)
     );
 
