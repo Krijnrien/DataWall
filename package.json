@@ -1,22 +1,46 @@
 {
-  "name": "datawall-frontend",
+  "name": "p5-es6",
   "version": "1.0.0",
-  "description": "Frontend of the datawall project",
-  "main": "main.js",
+  "description": "Create p5 sketches using es6 and bundle files with webpack",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack && webpack-dev-server --watch --inline --content-base dist",
+    "clean": "rmdir dist -r"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Krijnrien/DataWall.git"
+  "keywords": [
+    "p5js",
+    "webpack",
+    "es5",
+    "es2015",
+    "processing"
+  ],
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.14.0",
+    "babel-eslint": "^6.1.2",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
+    "copy-webpack-plugin": "^3.0.1",
+    "eslint": "^3.4.0",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-config-airbnb-base": "^12.0.2",
+    "eslint-loader": "^1.5.0",
+    "eslint-plugin-babel": "^3.2.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-promise": "^2.0.0",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.22.0",
+    "standard": "^8.0.0",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.15.1"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Krijnrien/DataWall/issues"
-  },
-  "homepage": "https://github.com/Krijnrien/DataWall#readme",
   "dependencies": {
-    "mqtt": "^2.13.0"
+    "css-loader": "^0.26.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "node-sass": "^4.1.1",
+    "p5": "^0.5.3",
+    "postcss-loader": "^1.2.1",
+    "sass-loader": "^4.1.1",
+    "style-loader": "^0.13.1"
   }
 }
