@@ -4,7 +4,7 @@ import (
 	"DataWall/cassandra"
 	"fmt"
 	//"DataWall/distributer"
-	"DataWall/distributer"
+	//"DataWall/distributer"
 )
 
 type DeviceSetArr []cassandra.Device
@@ -14,6 +14,6 @@ func SerializeData(DevicesSet *[]cassandra.Device) {
 	var apfel *[]cassandra.Device = DevicesSet
 	fmt.Println(len(*apfel))
 	//GetDisconnects(apfel)
-	distributer.CreateNodes(apfel)
+	//distributer.CreateNodes(apfel)
 	fmt.Println(len(*apfel))
 }

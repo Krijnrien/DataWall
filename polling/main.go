@@ -74,7 +74,7 @@ func getDevicesLocationsData(currentTime time.Time) {
 		}).Error("Could not serialize JSON response to device struct")
 	}
 	//DevicesSet.Mutex.RUnlock()
-
+	
 	go data.SerializeData(Devices)
 
 	log.WithFields(log.Fields{
