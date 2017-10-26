@@ -10,6 +10,8 @@ import (
 	log "github.com/sirupsen/logrus" // Logging library
 	"golang.org/x/oauth2"            // Authentication library
 	"DataWall/cassandra"
+	"net/http"
+	"fmt"
 )
 
 //TODO
@@ -37,11 +39,7 @@ func doEvery(interval time.Duration, repeatFunction func(time.Time)) {
 	}
 }
 
-/** getDevicesLocationsData
- * Get Fontys authentication token. Connect to devices location endpoint, read & serialize response.
- * currenTime //TODO Unused parameter? NO!
- */
-func getDevicesLocationsData(currentTime time.Time) {
+func serveApi(w http.ResponseWriter, h *http.Request) {
 
 	log.WithFields(log.Fields{
 		"Start time": time.Now(),
@@ -64,7 +62,7 @@ func getDevicesLocationsData(currentTime time.Time) {
 	body, _ := ioutil.ReadAll(resp.Body)
 	defer resp.Body.Close()
 
-//	DevicesSet.Mutex.RLock()
+	//	DevicesSet.Mutex.RLock()
 	// Serialize JSON response to device struct.
 	err := json.Unmarshal([]byte(string(body)), &Devices)
 	if err != nil {
@@ -74,10 +72,27 @@ func getDevicesLocationsData(currentTime time.Time) {
 		}).Error("Could not serialize JSON response to device struct")
 	}
 	//DevicesSet.Mutex.RUnlock()
-	
+
 	go data.SerializeData(Devices)
 
 	log.WithFields(log.Fields{
 		"End time": time.Now(),
 	}).Debug("Finished retrieving data from Fontys API")
+
+	structuredjson, err := json.MarshalIndent(Devices,"", " ")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Fprintf(w, string(structuredjson))
+	fmt.Println("end")
+
+}
+/** getDevicesLocationsData
+ * Get Fontys authentication token. Connect to devices location endpoint, read & serialize response.
+ * currenTime //TODO Unused parameter? NO!
+ */
+func getDevicesLocationsData(currentTime time.Time) {
+	http.HandleFunc("/array",serveApi)
+	http.ListenAndServe(":3000",nil)
 }
