@@ -1,12 +1,12 @@
 package main
 
 import (
-	"time"
 	"fmt"
 	"sync"
+	"time"
 
-	log "github.com/sirupsen/logrus" // Logging errors
 	"github.com/gocql/gocql"
+	log "github.com/sirupsen/logrus" // Logging errors
 )
 
 var session *gocql.Session
@@ -71,8 +71,7 @@ func InsertDevices(devices []Device) {
 func insert(device Device) {
 	// Insert device struct into database
 	if queryErr := getSession().Query(`INSERT INTO locations (loc_x, loc_y, loc_z, user_hash, createdat) VALUES \
-										(?, ?, ?, ?, ?)`, device.X, device.Y, device.Z, device.Hash, time.Now()).Exec();
-		queryErr != nil {
+										(?, ?, ?, ?, ?)`, device.X, device.Y, device.Z, device.Hash, time.Now()).Exec(); queryErr != nil {
 		log.WithFields(log.Fields{
 			"Error": queryErr,
 		}).Fatal("Failed inserting record into database! ")

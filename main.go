@@ -1,15 +1,15 @@
 package main
 
 import (
-	"time"
-	"fmt"
-	"os"
-	"io/ioutil"
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"net/http"
+	"os"
+	"time"
 
-	"golang.org/x/oauth2"
 	log "github.com/sirupsen/logrus" // Logging library
+	"golang.org/x/oauth2"
 )
 
 const interval = 20000 * time.Millisecond // Time with 20 seconds interval
@@ -42,7 +42,7 @@ func main() {
 * Timer to repeat func every given amount of time.
 * @param interval in whole seconds.
 * @param function name to repeat every interval tick
-*/
+ */
 func doEvery(interval time.Duration, repeatFunction func(time.Time)) {
 	for currentTime := range time.Tick(interval) {
 		repeatFunction(currentTime)
