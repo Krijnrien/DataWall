@@ -12,7 +12,7 @@ import (
 var session *gocql.Session
 var once sync.Once
 
-/** GetDevices
+/**
  * Requests devices location from database with given maximum record limit.
  * @param limit: Amount of rows you want to limit your request to. Must be positive.
  * @return List of device locations by struct Locations.

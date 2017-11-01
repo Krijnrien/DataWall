@@ -8,25 +8,20 @@ import (
 	"os"
 	"time"
 
-	log "github.com/sirupsen/logrus" // Logging library
+	"flag"
+	log "github.com/sirupsen/logrus"
 	"golang.org/x/oauth2"
+	"strconv"
 )
 
 const interval = 20000 * time.Millisecond // Time with 20 seconds interval
 
-var Devices *[]Device
-var cache = "Waiting for first request"
+var cache = "[]"
 
 func main() {
-	// Check if the token is valid
-	if len(Token) == 0 {
-		log.WithFields(log.Fields{
-			"Error": "Invalid token!",
-		}).Error()
-		os.Exit(0)
-	}
+	parseFlags()
 
-	log.Info("Starting data-gatherer application!")
+	log.Info("Starting the datawall backend on port " + strconv.Itoa(Port))
 
 	// Refresh the devices list every `interval`.
 	go doEvery(interval, refreshDevices)
@@ -36,6 +31,21 @@ func main() {
 
 	// Start the api server.
 	apiServer(time.Now())
+}
+
+func parseFlags() {
+	flag.StringVar(&IpAddress, "ip", "127.0.0.1", "The ip that the cassandra database will run on.")
+	flag.StringVar(&Keyspace, "keyspace", "data", "The keyspace of the cassandra database.")
+	flag.IntVar(&Port, "port", 3000, "The port that the api server will run on.")
+	flag.StringVar(&Token, "token", "", "The access token that will be used to contact the fontys api.")
+	flag.BoolVar(&UseDatabase, "use-database", false, "Whether the application should store all fontys api responses in the database.")
+	flag.Parse()
+
+	// Check if the token is valid
+	if len(Token) == 0 {
+		log.Error("Missing required parameter token. For help see -h.")
+		os.Exit(0)
+	}
 }
 
 /**
@@ -52,28 +62,28 @@ func doEvery(interval time.Duration, repeatFunction func(time.Time)) {
 /**
  * The handler for the devices endpoint
  */
-func devicesEndpoint(w http.ResponseWriter, h *http.Request) {
+func devicesEndpoint(w http.ResponseWriter, _ *http.Request) {
 	fmt.Fprintf(w, cache)
 }
 
 /**
  * The API server that handles the requests.
  */
-func apiServer(currentTime time.Time) {
+func apiServer(_ time.Time) {
 	http.HandleFunc("/devices", devicesEndpoint)
-	http.ListenAndServe(ServeAddres, nil)
+	http.ListenAndServe(":"+strconv.Itoa(Port), nil)
 }
 
 /**
  * The function that refreshes the cache and gets the response from the fontys api.
  */
-func refreshDevices(currentTime time.Time) {
+func refreshDevices(_ time.Time) {
 	log.WithFields(log.Fields{
 		"Start time": time.Now(),
 	}).Debug("Retrieving data from Fontys API")
 
-	// Retrieve configuration for Fontys Devices API url
-	devicesEndpointUrl := ApiProtocol + ApiDomain + ApiDevicesPath // Fontys endpoint url
+	// Retrieve configuration for Fontys devices API url
+	devicesEndpointUrl := ApiProtocol + ApiDomain + ApiDevicesPath
 
 	// Retrieve Token from Config and set in proper struct
 	tokenSource := &TokenSource{
@@ -86,15 +96,19 @@ func refreshDevices(currentTime time.Time) {
 	defer resp.Body.Close()
 
 	// Serialize JSON response to device struct.
-	err := json.Unmarshal([]byte(string(body)), &Devices)
+	var devices *[]Device
+	err := json.Unmarshal([]byte(string(body)), &devices)
 	if err != nil {
-		log.WithFields(log.Fields{
-			"Error":   err.Error(),
-			"Comment": "Could not serialize JSON response to device struct. Is your token up to date?",
-		}).Error()
+		log.Error("Could not serialize JSON response to device struct. Is your token up to date?")
+		os.Exit(0)
 	}
 
 	// Cache the response
-	bytes, _ := json.MarshalIndent(Devices, "", " ")
+	bytes, _ := json.MarshalIndent(devices, "", " ")
 	cache = string(bytes)
+
+	if UseDatabase {
+		// Insert the response in the database
+		go InsertDevices(*devices)
+	}
 }
