@@ -14,24 +14,20 @@ import (
 	"fmt"
 )
 
-//TODO
-/** endpointPolling
-*
-*/
 func EndpointPolling() {
 	log.Info("Starting data-gatherer application!")
 	getDevicesLocationsData(time.Now())
-	// call getDevicesLocationsData func every tick predefined by interval var.
 	doEvery(interval, getDevicesLocationsData)
 }
 
 var Devices *[]cassandra.Device
-const interval time.Duration = 20000 * time.Millisecond // Time with 20 seconds interval
 
-/** do Every //TODO Func name not clear enough
-* Timer to repeat func every given amount of time. //TODO Does this have to be a seperate func? Can it not be recursive?
+const interval = 20000 * time.Millisecond // Time with 20 seconds interval
+
+/*
+* Timer to repeat func every given amount of time.
 * @param interval in whole seconds.
-8 @param function name to repeat every interval tick
+* @param function name to repeat every interval tick
 */
 func doEvery(interval time.Duration, repeatFunction func(time.Time)) {
 	for currentTime := range time.Tick(interval) {
@@ -49,14 +45,11 @@ func serveApi(w http.ResponseWriter, h *http.Request) {
 	cfg := *config.Get()
 	devicesEndpointUrl := cfg.ApiProtocol + cfg.ApiDomain + cfg.ApiDevicesPath // Fontys endpoint url
 
-	// TODO Should this variable be predefined?
-
 	// Retrieve Token from Config and set in proper struct
 	tokenSource := &TokenSource{
 		AccessToken: config.Get().Token,
 	}
 
-	// TODO DEPRECATED? NO!
 	// Create oauth2 client with inserted token to proceed GET request and read the response
 	resp, _ := oauth2.NewClient(oauth2.NoContext, tokenSource).Get(devicesEndpointUrl)
 	body, _ := ioutil.ReadAll(resp.Body)
@@ -71,7 +64,6 @@ func serveApi(w http.ResponseWriter, h *http.Request) {
 			"End time": err.Error(),
 		}).Error("Could not serialize JSON response to device struct")
 	}
-	//DevicesSet.Mutex.RUnlock()
 
 	go data.SerializeData(Devices)
 
@@ -79,20 +71,21 @@ func serveApi(w http.ResponseWriter, h *http.Request) {
 		"End time": time.Now(),
 	}).Debug("Finished retrieving data from Fontys API")
 
-	structuredjson, err := json.MarshalIndent(Devices,"", " ")
+	structuredJson, err := json.MarshalIndent(Devices, "", " ")
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Fprintf(w, string(structuredjson))
+	fmt.Fprintf(w, string(structuredJson))
 	fmt.Println("end")
 
 }
+
 /** getDevicesLocationsData
  * Get Fontys authentication token. Connect to devices location endpoint, read & serialize response.
  * currenTime //TODO Unused parameter? NO!
  */
 func getDevicesLocationsData(currentTime time.Time) {
-	http.HandleFunc("/array",serveApi)
-	http.ListenAndServe(":3000",nil)
+	http.HandleFunc("/array", serveApi)
+	http.ListenAndServe(":3000", nil)
 }

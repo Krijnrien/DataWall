@@ -10,9 +10,9 @@ import (
 	"path/filepath"
 )
 
-const defaultLimit int = 50         // Default limit if none could be found in header.
-const headerLimit string = "Limit"  // Field to search for in header.
-const defaultResponse string = "{}" // Empty response body predefined.
+const defaultLimit = 50      // Default limit if none could be found in header.
+const headerLimit = "Limit"  // Field to search for in header.
+const defaultResponse = "{}" // Empty response body predefined.
 
 /** RegisterEndPoints
  * Set all endpoints of webserver to listen and serve to.
@@ -40,7 +40,7 @@ func RegisterEndPoints() {
  */
 func getLimit(header *http.Header) int {
 	// Get header limit from the HTTP request
-	var headerLimit string = header.Get(headerLimit)
+	var headerLimit = header.Get(headerLimit)
 	log.WithFields(log.Fields{
 		"limit": headerLimit,
 	}).Debug("Header limit of HTTP request")
@@ -55,10 +55,8 @@ func getLimit(header *http.Header) int {
 	return limit
 }
 
-/** root
+/**
  * Serves static HTML file displaying endpoints by default.
- * @param writer
- * @param request
  */
 func root(writer http.ResponseWriter, request *http.Request) {
 	// Set header of request
