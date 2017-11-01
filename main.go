@@ -24,7 +24,7 @@ func main() {
 	log.Info("Starting the datawall backend on port " + strconv.Itoa(Port))
 
 	// Refresh the devices list every `interval`.
-	go doEvery(interval, refreshDevices)
+	go DoEvery(interval, refreshDevices)
 
 	// Refresh now.
 	go refreshDevices(time.Now())
@@ -42,20 +42,16 @@ func parseFlags() {
 	flag.Parse()
 
 	// Check if the token is valid
-	if len(Token) == 0 {
+	if !ValidToken(Token) {
 		log.Error("Missing required parameter token. For help see -h.")
-		os.Exit(0)
+		os.Exit(1)
 	}
-}
 
-/**
-* Timer to repeat func every given amount of time.
-* @param interval in whole seconds.
-* @param function name to repeat every interval tick
- */
-func doEvery(interval time.Duration, repeatFunction func(time.Time)) {
-	for currentTime := range time.Tick(interval) {
-		repeatFunction(currentTime)
+	// Check if the port is valid
+	if !ValidPort(Port) {
+		err := fmt.Sprintf("Port %d is already in use. For help see -h.", Port)
+		log.Error(err)
+		os.Exit(1)
 	}
 }
 
