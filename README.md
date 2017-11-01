@@ -4,9 +4,25 @@ This is a cleaned version of the backend branch where only the features that are
 
 ## Setup
 
-1. Clone the repository with `git clone git@github.com:Krijnrien/DataWall.git`
-1. Enter the directory `cd DataWall`
-1. Go to the Production branch with `git checkout Production`
-1. *TEMP STEP*: Enter your `token` in `config.go`
-1. Build the project with `go build .`
-1. Start the application by calling `./DataWall`
+1. Clone the repository: `git clone git@github.com:Krijnrien/DataWall.git`
+1. Enter the directory: `cd DataWall`
+1. Go to the Production branch: `git checkout Production`
+1. **TEMP STEP:** Enter your token in `config.go`. Get your access token [here](https://api.fhict.nl/documentation/ShowToken)
+1. Get all required dependencies: `go get .`
+1. Build the project: `go build .`
+1. Start the application: `./DataWall`
+
+## ToDo
+
+- [ ] Automate getting the token
+- [ ] Make a script that runs the whole setup
+- [ ] Add unit tests for more quality control
+
+## Contributing
+
+1. Make sure all code that is commited builds without errors and is formatted with `go fmt`.
+1. Update the README.md with details of changes to the application, this includes new environment variables, exposed ports and useful file locations.
+
+## Contributors
+
+[StefanPahlplatz](https://github.com/StefanPahlplatz) | [Krijnrien](https://github.com/Krijnrien) | [CPIJ](https://github.com/CPIJ)
