@@ -1,8 +1,14 @@
-## DataWall 2017 Production
+# DataWall 2017 Production
 
+This is a cleaned version of the backend branch where only the features that are used are present.
 
-## Setup Production
-1. Clone the project
-1. Navigate to dicrectory
-1. Run in terminal ```bash startup.sh```
+## Prerequisites
+
+- A cassandra server is running.
+
+## Setup
+
+1. Clone the repository
+1. Enter the directory `cd DataWall`
+1. Run the application ```./startup.sh```
 
