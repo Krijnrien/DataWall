@@ -29,4 +29,4 @@ To view all arguments from the command line use the flag `-h`.
 
 ## Contributors
 
-[StefanPahlplatz](https://github.com/StefanPahlplatz) | [Krijnrien](https://github.com/Krijnrien) | [CPIJ](https://github.com/CPIJ)
+[StefanPahlplatz](https://github.com/StefanPahlplatz) | [Krijnrien](https://github.com/Krijnrien) | [CPIJ](https://github.com/CPIJ) | [Martin Savov](https://github.com/MIT120) | [Hristiyan Tarnev](https://github.com/beasteca)
