@@ -16,6 +16,15 @@ open a terminal and run ```go env``` and search for ```GOPATH```.
 4. Make sure you have started the ```Production server``` located in the [production](https://github.com/Krijnrien/DataWall/tree/Production) make sure you follow the instructions in the production branch 
 5. Make sure you have a testing machine (another computer besides the server)
 6. Local Area Network connected by a router to the external network is requiered fot the test to be performed. ```Note : Make sure all machines have connection with the router and have a private ip address!```. This depends on your ```router settings```. If `Problems occur` [Tutorial](https://www.pcworld.com/article/249185/networking/how-to-set-up-a-wireless-router.html)  
-7. 
 ### GraphQL script setup
-```There are 2 Client scripts ```
+```There are 2 Client scripts ``` located in the GraphQL folder. 
+1. Open them in a text editor example([notedpad++](https://notepad-plus-plus.org/download/v7.5.1.html), notedpad, [Atom](https://atom.io/), [Sublime](https://www.sublimetext.com/3) etc.)
+2. Change the Ip address by default to your servers local ip address in both ```client_1.js and client_2.js``` files.
+```js 
+'use strict'
+const mqtt = require('mqtt')
+const client = mqtt.connect('mqtt://ip address : mqtt port on server')
+'Example'
+const client = mqtt.connect('mqtt://10.0.0.3:1885')
+```
+3. 
