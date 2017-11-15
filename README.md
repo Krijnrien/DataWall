@@ -12,4 +12,10 @@ open a terminal and run ```go env``` and search for ```GOPATH```.
 ### Prerequisites
 1. Make sure you installed ``` node.js ``` on your server. If you haven't make sure to follow the instructons mentioned in node.js [installer download](https://nodejs.org/en/download/)
 2. Make sure you have cloned the repository of Testing into your ```src``` folder(Follow ```Project setup instructions above```). If your having problems with that make sure to see the full explanation in [Backend](https://github.com/Krijnrien/DataWall/tree/Backend)
-3. 
+3. Write the command to install all dependencies in the Graphql folder in the test version ```npm install```. This is mandatory because other wise exceptions will be thrown. 
+4. Make sure you have started the ```Production server``` located in the [production](https://github.com/Krijnrien/DataWall/tree/Production) make sure you follow the instructions in the production branch 
+5. Make sure you have a testing machine (another computer besides the server)
+6. Local Area Network connected by a router to the external network is requiered fot the test to be performed. ```Note : Make sure all machines have connection with the router and have a private ip address!```. This depends on your ```router settings```. If `Problems occur` [Tutorial](https://www.pcworld.com/article/249185/networking/how-to-set-up-a-wireless-router.html)  
+7. 
+### GraphQL script setup
+```There are 2 Client scripts ```
