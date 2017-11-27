@@ -1,6 +1,6 @@
-import p5 from 'p5';
+import P5 from 'p5';
 import sketch from './js/sketch';
 import './styles/styles.scss';
 
 // Initialize sketch
-new p5(sketch);
+new P5(sketch); //eslint-disable-line

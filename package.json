@@ -1,18 +1,12 @@
 {
-  "name": "p5-es6",
+  "name": "datawall-frontend",
   "version": "1.0.0",
-  "description": "Create p5 sketches using es6 and bundle files with webpack",
+  "description": "Frontend of the Datawall project.",
   "scripts": {
     "start": "webpack && webpack-dev-server --watch --inline --content-base dist",
     "clean": "rmdir dist -r"
   },
-  "keywords": [
-    "p5js",
-    "webpack",
-    "es5",
-    "es2015",
-    "processing"
-  ],
+  "keywords": [],
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-core": "^6.14.0",
@@ -25,7 +19,7 @@
     "eslint-config-airbnb-base": "^12.0.2",
     "eslint-loader": "^1.5.0",
     "eslint-plugin-babel": "^3.2.0",
-    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-promise": "^2.0.0",
     "file-loader": "^0.9.0",
@@ -36,6 +30,7 @@
   },
   "dependencies": {
     "css-loader": "^0.26.1",
+    "eslint-plugin-react": "^7.5.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "node-sass": "^4.1.1",
     "p5": "^0.5.3",

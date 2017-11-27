@@ -1,68 +1,34 @@
-import p5 from 'p5';
+/* eslint-disable no-param-reassign */
+
 import 'p5/lib/addons/p5.sound';
 import 'p5/lib/addons/p5.dom';
 
-import MqttSerivce from './modules/service/mqttService.js';
-import Device from './modules/class/device.js';
-import { DeviceBuilder } from './modules/class/deviceBuilder.js';
-import TestAnimation from './modules/animation/testAnimation.js';
+import { initializeService } from './modules/service/DeviceService';
+import VisualizationManager from './modules/visualization/VisualizationManager';
+import Utillities from './modules/util/Utillities';
 
-let animation;
-let service;
+const manager = new VisualizationManager();
+
+initializeService((sender, args) => {
+  manager.data = Utillities.normalizeData(args.data);
+  manager.previousData = Utillities.normalizeData(args.previousData);
+});
+
 
 const sketch = (p5) => {
-  // Variables scoped within p5
-  const canvasWidth = p5.windowWidth;
-  const canvasHeight = p5.windowHeight;
-
-  // make library globally available
   window.p5 = p5;
 
-  // Setup function
-  // ======================================
   p5.setup = () => {
-    let canvas = p5.createCanvas(canvasWidth, canvasHeight);
+    const canvas = p5.createCanvas(p5.windowWidth, p5.windowHeight);
     canvas.parent('sketch');
     p5.frameRate(24);
+  };
 
-    animation = new TestAnimation(
-      [0, 1, 2, 3, 4].map(n => p5.loadImage(`assets/img/floor${n}.png`))
-    );
-
-    service = new MqttSerivce(
-
-      // This function is called when new data arrives.
-      data => {
-        let maxX = Math.max(...data.map(d => d.x))
-        let maxY = Math.max(...data.map(d => d.y))
-
-        animation.setData(
-          data.map(d => new DeviceBuilder()
-            .setX(p5.map(d.x, 0, maxX, 0, canvasWidth))
-            .setY(p5.map(d.y, 0, maxY, 0, canvasHeight))
-            .setFloor(d.z)
-            .setUserType(d.userType)
-            .setHash(d.hash)
-            .build()
-          )
-        );
-      },
-
-      // This function is called when an error occures while retrieving the data.
-      error => console.error(error)
-    );
-
-    service.subscribe("assets/json/dummy-data.json");
-  }
-
-  // Draw function
-  // ======================================
   p5.draw = () => {
-    if (animation) {
-      animation.update();
-      animation.show();
-    }
-  }
-}
+    manager.current.update();
+    manager.current.show();
+  };
+};
 
 export default sketch;
+
