@@ -5,18 +5,21 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"os"
 	"time"
 
 	"flag"
 	log "github.com/sirupsen/logrus"
+	"github.com/gorilla/mux"
 	"golang.org/x/oauth2"
 	"strconv"
+	"strings"
 )
 
 const interval = 20000 * time.Millisecond // Time with 20 seconds interval
 
-var cache = "[]"
+var Devices []Device
 
 func main() {
 	parseFlags()
@@ -37,14 +40,22 @@ func parseFlags() {
 	flag.StringVar(&IpAddress, "ip", "127.0.0.1", "The ip that the cassandra database will run on.")
 	flag.StringVar(&Keyspace, "keyspace", "data", "The keyspace of the cassandra database.")
 	flag.IntVar(&Port, "port", 3000, "The port that the api server will run on.")
-	flag.StringVar(&Token, "token", "", "The access token that will be used to contact the fontys api.")
 	flag.BoolVar(&UseDatabase, "use-database", false, "Whether the application should store all fontys api responses in the database.")
+	flag.StringVar(&ClientId, "client-id", "i361819-datawall", "ClientId to get authentication token")
+	flag.StringVar(&ClientSecret, "client-secret", "Ryk4m-i07JhqHheSLYHvaN4eBqhw8WxZOo3sW7yr", "The hash to get authentication token")
 	flag.Parse()
 
 	// Check if the token is valid
-	if !ValidToken(Token) {
-		log.Error("Missing required parameter token. For help see -h.")
+	if !ValidToken(ClientId) {
+		log.Error("Missing required parameter ClientId. For help see -h.")
 		os.Exit(1)
+	}
+
+	// Check if the token is valid
+	if !ValidToken(ClientSecret) {
+		log.Error("Missing required parameter Client secret. For help see -h.")
+		os.Exit(1)
+		fmt.Println(ClientId)
 	}
 
 	// Check if the port is valid
@@ -59,15 +70,18 @@ func parseFlags() {
  * The handler for the devices endpoint
  */
 func devicesEndpoint(w http.ResponseWriter, _ *http.Request) {
-	fmt.Fprintf(w, cache)
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		json.NewEncoder(w).Encode(Devices)
 }
 
 /**
  * The API server that handles the requests.
  */
 func apiServer(_ time.Time) {
-	http.HandleFunc("/devices", devicesEndpoint)
-	http.ListenAndServe(":"+strconv.Itoa(Port), nil)
+	router := mux.NewRouter()
+	router.HandleFunc("/devices", devicesEndpoint).Methods("GET")
+	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(Port), router))
 }
 
 /**
@@ -81,30 +95,114 @@ func refreshDevices(_ time.Time) {
 	// Retrieve configuration for Fontys devices API url
 	devicesEndpointUrl := ApiProtocol + ApiDomain + ApiDevicesPath
 
-	// Retrieve Token from Config and set in proper struct
-	tokenSource := &TokenSource{
-		AccessToken: Token,
-	}
+	// Values set for POST request
+	v := url.Values{}
+	v.Set("grant_type", "client_credentials")
+	v.Set("scope", "fhict")
+	v.Set("client_id", ClientId)
+	v.Set("client_secret", ClientSecret)
 
-	// Create oauth2 client with inserted token to proceed GET request and read the response
-	resp, _ := oauth2.NewClient(oauth2.NoContext, tokenSource).Get(devicesEndpointUrl)
-	body, _ := ioutil.ReadAll(resp.Body)
-	defer resp.Body.Close()
+	// Values.Encode() encodes the values into "URL encoded" form sorted by key
+	s := v.Encode()
 
-	// Serialize JSON response to device struct.
-	var devices *[]Device
-	err := json.Unmarshal([]byte(string(body)), &devices)
+	// Create Post request
+	req, err := http.NewRequest("POST", TokenUrl, strings.NewReader(s))
 	if err != nil {
-		log.Error("Could not serialize JSON response to device struct. Is your token up to date?")
+		log.Error("Could not create request")
 		os.Exit(0)
 	}
 
-	// Cache the response
-	bytes, _ := json.MarshalIndent(devices, "", " ")
-	cache = string(bytes)
+	// Set header of request
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+
+	// Client executes request
+	c := &http.Client{}
+	resp, err := c.Do(req)
+	if err != nil {
+		log.Error("Could not request server")
+		os.Exit(0)
+	}
+
+	// Read body of request and close it
+	body, _ := ioutil.ReadAll(resp.Body)
+	defer resp.Body.Close()
+
+	// Unmarshall body to the access token that will be used to contact the fontys api.
+	var token *TokenSource
+	err = json.Unmarshal([]byte(string(body)), &token)
+	if err != nil {
+		log.Error("Could not serialize JSON response to token struct. Are your credentials right?")
+		os.Exit(0)
+	}
+
+	// Create oauth2 client with inserted token to proceed GET request and read the response
+	resp, _ = oauth2.NewClient(oauth2.NoContext, token).Get(devicesEndpointUrl)
+	body, _ = ioutil.ReadAll(resp.Body)
+	defer resp.Body.Close()
+
+	// Check if []Devices variable contains anything
+	if len(Devices) > 0 {
+		// Serialize JSON response to device struct.
+		// And store in temporary devices variable
+		var devices *[]Device
+		err := json.Unmarshal([]byte(string(body)), &devices)
+		if err != nil {
+			log.Error("Could not serialize JSON response to device struct. Is your token up to date?")
+			os.Exit(0)
+		}
+		// Use temporary devices variable to update main []Devices variable
+		go update(*devices)
+
+	} else {
+		// Main []Devices variable does not contain anything, which means that this is the first run.
+		err := json.Unmarshal([]byte(string(body)), &Devices)
+		if err != nil {
+			log.Error("Could not serialize JSON response to device struct. Is your token up to date?")
+			os.Exit(0)
+		}
+
+		// sets times of creation
+		for i := 0; i < len(Devices); i++ {
+			Devices[i].CreatedAt = time.Now()
+		}
+	}
 
 	if UseDatabase {
 		// Insert the response in the database
-		go InsertDevices(*devices)
+		go InsertDevices(Devices)
 	}
 }
+
+/**
+ * The function that updates main []Devices variable
+ * @param slice of new devices
+ */
+func update(newDevices []Device) {
+	for i, oldDevice := range Devices {
+
+		updateIndex := Contains(newDevices, oldDevice)
+		if updateIndex >= 0 {
+			// updates location of existing device
+			oldDevice.X = newDevices[updateIndex].X
+			oldDevice.Y = newDevices[updateIndex].Y
+			oldDevice.Z = newDevices[updateIndex].Z
+		} else {
+			// removes logged out device
+			if i == len(Devices) - 1 {
+				Devices = Devices[:len(Devices)-1]
+			} else{
+				Devices = append(Devices[:i], Devices[i+1:]...)
+			}
+		}
+	}
+
+	for _, newDevice := range newDevices {
+
+		if Contains(Devices, newDevice) == -1 {
+			// adds new device
+			newDevice.CreatedAt = time.Now()
+			Devices = append(Devices, newDevice)
+		}
+	}
+}
+

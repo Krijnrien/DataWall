@@ -4,7 +4,7 @@ import "time"
 
 // Struct to use in the authentication process
 type TokenSource struct {
-	AccessToken string
+	AccessToken string `json:"access_token"`
 }
 
 // Struct for Fontys API return result
