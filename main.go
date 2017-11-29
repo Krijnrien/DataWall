@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"flag"
-	log "github.com/sirupsen/logrus"
 	"github.com/gorilla/mux"
+	log "github.com/sirupsen/logrus"
 	"golang.org/x/oauth2"
 	"strconv"
 	"strings"
@@ -71,8 +71,8 @@ func parseFlags() {
  */
 func devicesEndpoint(w http.ResponseWriter, _ *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		json.NewEncoder(w).Encode(Devices)
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	json.NewEncoder(w).Encode(Devices)
 }
 
 /**
@@ -188,9 +188,9 @@ func update(newDevices []Device) {
 			oldDevice.Z = newDevices[updateIndex].Z
 		} else {
 			// removes logged out device
-			if i == len(Devices) - 1 {
+			if i == len(Devices)-1 {
 				Devices = Devices[:len(Devices)-1]
-			} else{
+			} else {
 				Devices = append(Devices[:i], Devices[i+1:]...)
 			}
 		}
@@ -205,4 +205,3 @@ func update(newDevices []Device) {
 		}
 	}
 }
-
