@@ -40,8 +40,8 @@ class Device {
 
 		this.simpleMovement(x1,y1);
 		
-		if(!this.arrivedTo(x1,y1)){
-		this.growTrail();}
+		if(!this.arrivedTo(x1,y1)) this.growTrail();
+
 
 		this.displayTrail();
 
