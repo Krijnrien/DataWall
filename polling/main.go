@@ -90,7 +90,7 @@ func serveApi(w http.ResponseWriter, h *http.Request) {
 }
 /** getDevicesLocationsData
  * Get Fontys authentication token. Connect to devices location endpoint, read & serialize response.
- * currenTime //TODO Unused parameter? NO!
+ * currentTime //TODO Unused parameter? NO!
  */
 func getDevicesLocationsData(currentTime time.Time) {
 	http.HandleFunc("/array",serveApi)

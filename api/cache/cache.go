@@ -1,5 +1,13 @@
 package cache
 
+/**
+ *
+ *
+ * @author Krijn van der Burg
+ * @version 1.0
+*  @since
+*/
+
 import (
 	"sync"
 	"time"

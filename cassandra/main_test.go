@@ -12,7 +12,7 @@ import(
  * Test if given limit is
  */
 func TestGetDevicesRandomLimit(t *testing.T) {
-	var locList []Device = GetDevices(50)
+	var locList = GetDevices(50)
 	assert.Equal(t, true, len(locList) < 50, "More results were returned than given limit!")
 }
 
@@ -21,6 +21,6 @@ func TestGetDevicesRandomLimit(t *testing.T) {
  */
 func TestGetDevicesNegativeLimit(t *testing.T) {
 	// GetDevices receives uint type, limit must be positive
-	var locList []Device = GetDevices(-5)
+	var locList = GetDevices(-5)
 	assert.Equal(t, true, len(locList) < 50, "More results were returned than given limit!")
 }

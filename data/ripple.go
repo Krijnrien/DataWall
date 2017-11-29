@@ -5,10 +5,8 @@ import (
 	"DataWall/cassandra"
 )
 
-
 func GetDisconnects(DevicesSet *[]cassandra.Device) {
 	for _, device := range *DevicesSet {
-	fmt.Println(device.Hash)
-
+		fmt.Println(device.Hash)
 	}
 }
