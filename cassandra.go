@@ -34,7 +34,7 @@ func GetDevices(limit int) []Device {
 	for iterable.MapScan(m) {
 		locList = append(locList, Device{
 			Hash:      m["user_hash"].(string),
-			CreatedAt: m["createdat"].(time.Time),
+			CreatedAt: m["createdat"].(int64),
 			X:         m["loc_x"].(float32),
 			Y:         m["loc_y"].(float32),
 			Z:         m["loc_z"].(int8),

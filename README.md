@@ -9,7 +9,7 @@ This is a cleaned version of the backend branch where only the features that are
 1. Go to the Production branch: `git checkout Production`
 1. Get all required dependencies: `go get .`
 1. Build the project: `go build .`
-1. Start the application: `./DataWall -token=<your-token>`
+1. Start the application: `./DataWall`
 
 ## Arguments
 
@@ -17,10 +17,10 @@ To view all arguments from the command line use the flag `-h`.
 
 ## ToDo
 
-- [ ] Automate getting the token
-- [ ] Make a script that runs the whole setup
+- [x] Automate getting the token
+- [x] Make a script that runs the whole setup
 - [ ] Add unit tests for more quality control
-- [ ] Make users persistent. This means that instead of overwriting the cache each time, only change the coordinates for users that were already connected.
+- [x] Make users persistent. This means that instead of overwriting the cache each time, only change the coordinates for users that were already connected.
 
 ## Contributing
 

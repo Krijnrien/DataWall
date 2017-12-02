@@ -163,7 +163,7 @@ func refreshDevices(_ time.Time) {
 
 		// sets times of creation
 		for i := 0; i < len(Devices); i++ {
-			Devices[i].CreatedAt = time.Now()
+			Devices[i].CreatedAt = time.Now().Unix()
 		}
 	}
 
@@ -178,30 +178,15 @@ func refreshDevices(_ time.Time) {
  * @param slice of new devices
  */
 func update(newDevices []Device) {
-	for i, oldDevice := range Devices {
-
-		updateIndex := Contains(newDevices, oldDevice)
-		if updateIndex >= 0 {
-			// updates location of existing device
-			oldDevice.X = newDevices[updateIndex].X
-			oldDevice.Y = newDevices[updateIndex].Y
-			oldDevice.Z = newDevices[updateIndex].Z
-		} else {
-			// removes logged out device
-			if i == len(Devices)-1 {
-				Devices = Devices[:len(Devices)-1]
-			} else {
-				Devices = append(Devices[:i], Devices[i+1:]...)
+	for _, newDevice := range newDevices {
+		for _, oldDevice := range Devices {
+			if newDevice.Hash == oldDevice.Hash {
+				fmt.Println(oldDevice.CreatedAt)
+				newDevice.CreatedAt = oldDevice.CreatedAt
+				break
 			}
 		}
+		newDevice.CreatedAt = time.Now().Unix()
 	}
-
-	for _, newDevice := range newDevices {
-
-		if Contains(Devices, newDevice) == -1 {
-			// adds new device
-			newDevice.CreatedAt = time.Now()
-			Devices = append(Devices, newDevice)
-		}
-	}
+	Devices = newDevices
 }

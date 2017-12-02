@@ -31,7 +31,7 @@ func DoEvery(interval time.Duration, repeatFunction func(time.Time)) {
  * The function that checks if []Device slice contains Device sample basing on Hash comparison
  * @param Slice of devices
  * @param Device to check
- * If item exists in slice, it's index is returned
+ * @return If item exists in slice, it's index is returned
  * Otherwise -1 is returned
  */
 func Contains(list []Device, device Device) int {
