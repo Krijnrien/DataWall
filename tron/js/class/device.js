@@ -5,7 +5,7 @@ class Device {
 		this.y = y0;
 
 		this.diameter = 10;							  // diameter of the device
-		this.speed = 2;								  // speed of movement of the device
+		this.speed = 0.7;								  // speed of movement of the device
 
 		if(random(-1,1) >= 0) {
 			this.trailColor = color(255,0,0); 		  // @trailColor: color variable
@@ -28,12 +28,14 @@ class Device {
 		this.changeDirectionPeriod = random(50, 150); // How often device should change direction
 		this.lastChangedDirectionTime = 0; 			  // keeps track of last change of direction
 		this.currentDirection = random(-1, 1); 		  // signs direction of device
+
+		this.units = [];
 	}
 
 	show() {
 		noStroke();
 		fill(this.deviceColor);
-		ellipse(this.x, this.y, this.diameter);
+		ellipse(this.x, this.y, this.getSize());
 	}
 
 	goTo(x1, y1) {
@@ -88,7 +90,7 @@ class Device {
 		// adding new particles
 		if(this.particleCounter >= this.particleFrequency){
 
-			let p = new Particle(this.x, this.y, this.speed, this.trailColor);
+			let p = new Particle(this.x, this.y, this.speed, this.trailColor, this.getSize());
 			this.particles.push(p);
 			this.particleCounter = 0;
 		}
@@ -152,26 +154,25 @@ class Device {
 		let distance = 3;
 		let toReturn = false;
 
-		let check0, check1;
+		let check;
 
 		if(axis == "x"){
-			check0 = this.x - xy;
-			check1 = xy - this.xy;
-
-			if((check0 < distance) && ( check0 > -distance)) toReturn = true;
-
-			if((check1 < distance) && ( check1 > -distance)) toReturn = true;
+			check = Math.abs(this.x - xy);
 		}
 
 		if(axis == "y"){
-			check0 = this.y - xy;
-			check1 = xy - this.y;
-
-			if((check0 < distance) && ( check0 > -distance)) toReturn = true;
-
-			if((check1 < distance) && ( check1 > -distance)) toReturn = true;
+			check = Math.abs(this.y - xy);
 		}
-		return toReturn;
+		
+		if (check <= distance) return true;
+		return false;
+	}
+
+	getSize(){
+		if(this.units.length == 1){
+			return this.diameter;
+		}
+		else return this.diameter * this.units.length * 0.5;
 	}
 
 	arrivedTo(x1, y1){
