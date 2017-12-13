@@ -12,7 +12,8 @@ export default class VisualizationManager {
     this.userPreferences = ['all'];
 
     // Add your visualization here!
-    // Also, dont forget to add 'this' as paramter as this class supplies the data to your visualization.
+    // Also, dont forget to add 'this' as paramter as this class supplies the data
+    // to your visualization.
     this.visualizations = [
       new TestVisualization(this),
     ];
