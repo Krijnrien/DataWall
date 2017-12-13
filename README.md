@@ -10,5 +10,7 @@
 2. Set indentation to `2`.
 3. Set line-endings to `LF`.
 
+## Contributing
+
 ## Testing
 ### TODO

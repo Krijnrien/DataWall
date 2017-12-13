@@ -4,6 +4,7 @@ export default class Visualization {
     this.hasShownUpdateWarning = false;
     this.hasShownDrawWarning = false;
     this.manager = manager;
+    this.name = 'undefined';
   }
 
   update() {

@@ -8,12 +8,12 @@ import VisualizationManager from './modules/visualization/VisualizationManager';
 import Utillities from './modules/util/Utillities';
 
 const manager = new VisualizationManager();
+window.manager = manager; // for debugging purposes.
 
 initializeService((sender, args) => {
-  manager.data = Utillities.normalizeData(args.data);
+  manager.currentData = Utillities.normalizeData(args.data);
   manager.previousData = Utillities.normalizeData(args.previousData);
 });
-
 
 const sketch = (p5) => {
   window.p5 = p5;
