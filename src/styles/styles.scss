@@ -1,6 +1,48 @@
 @import 'reset';
 
 body{
-  background: #e2e2e2;
+  background: #272626;
   overflow:hidden;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+}
+
+li {
+  margin:0 0 64px 0;
+  cursor: pointer;
+}
+
+.header {
+  font-size: 36px;
+  padding: 16px;
+  width: 100%;
+  align-content: center;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex: 1;
+  height: 100%;
+}
+
+.left-menu {
+  flex: 0.3;
+  padding: 48px;
+  max-width: 200px;
+  text-align: center;
+  
+}
+
+.menu {
+  text-decoration: underline;
+}
+
+.canvas {
+  flex: 0.7;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 32px;
 }

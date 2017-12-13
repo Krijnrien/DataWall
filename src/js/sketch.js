@@ -21,7 +21,7 @@ const sketch = (p5) => {
   p5.setup = () => {
     const canvas = p5.createCanvas(p5.windowWidth, p5.windowHeight);
     canvas.parent('sketch');
-    p5.frameRate(24);
+    p5.frameRate(1);
   };
 
   p5.draw = () => {
