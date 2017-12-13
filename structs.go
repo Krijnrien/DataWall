@@ -12,5 +12,5 @@ type Device struct {
 	Z         int8    `json:"z"`        // Z-index determines floor with one digit. Not making unsigned as future might make basement negative?
 	UserType  uint    `json:"userType"` // User type associated with device.
 	Hash      string  `json:"hash"`     // UserHash from fontys is a combination of Ip address and datetime (presumed of IP handout).
-	CreatedAt int64                     // CreatedAt field is added and assigned instantly at return.
+	CreatedAt int64   // CreatedAt field is added and assigned instantly at return.
 }
