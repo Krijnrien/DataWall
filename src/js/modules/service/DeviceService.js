@@ -6,8 +6,13 @@ export default class DeviceService {
     this.listeners = [];
     this.data = [];
     this.previousData = [];
-    this.interval = 20 * 1000;
+    this.interval = 1 * 1000;
     this.url = '../../../assets/json/dummy-data.json';
+    this.dummyData = [
+      '../../../assets/json/dummy-data.json',
+      '../../../assets/json/dummy-data-2.json',
+    ];
+    this.dummyIndex = 0;
   }
 
   subscribe(listener) {
@@ -15,7 +20,7 @@ export default class DeviceService {
   }
 
   update() {
-    fetch(this.url)
+    fetch(this.dummyData[this.dummyIndex])
       .then(response => response.json())
       .then((response) => {
         this.previousData = this.data;
@@ -25,7 +30,8 @@ export default class DeviceService {
         this.listeners.forEach((listener) => {
           listener.onUpdate(this, { data: this.data, previousData: this.previousData });
         });
-      });
+      })
+      .then(this.dummyIndex = (this.dummyIndex + 1) % this.dummyData.length);
   }
 }
 
@@ -39,7 +45,7 @@ export const initializeService = (onUpdate) => {
 
   service.update();
 
-  setTimeout(() => {
+  setInterval(() => {
     service.update();
   }, service.interval);
 
