@@ -6,21 +6,19 @@ export default class TestVisualization extends Visualization {
 
   constructor(manager) {
     super(manager);
-    this.data = [];
+    this.name = 'test';
   }
 
   update() {
-    this.manager.data.forEach((device, i) => {
-      this.data[i] = device;
-      this.data[i].x += p5.random(-5, 5);
-      this.data[i].y += p5.random(-5, 5);
-    });
+    // Useless method to keep the compiler quiet.
+    // Should be filled in with actually updating the data.
+    this.data = this.data;
   }
 
   show() {
     p5.clear();
 
-    this.data.forEach((device) => {
+    this.manager.currentData.forEach((device) => {
       if (device.userType === 1) {
         p5.fill(255, 204, 0);
         p5.ellipse(device.x, device.y, 10);
