@@ -7,23 +7,60 @@ body{
   font-family: 'Montserrat', sans-serif;
 }
 
-li {
-  margin:0 0 64px 0;
+.options {
+  margin-top: 64px;
+}
+
+.options ul {
+  display: inline-table;
+}
+
+.options li {
+  margin:0 96px 64px 0;
   cursor: pointer;
+  display: inline;
+}
+
+.badge {
+  border: 2px solid white;
+  /* one half of ( (border * 2) + height + padding ) */
+  box-shadow: 1px 1px 1px black;
+  color: white;
+  height: 48px;
+  width: 48px;
+  padding: 28px;
+  text-align: center;
+}
+
+.badge:hover {
+  border: 2px solid white;
+  /* one half of ( (border * 2) + height + padding ) */
+  box-shadow: 1px 1px 1px black;
+  color: rgb(0, 0, 0);
+  background-color: white;
+  height: 48px;
+  width: 48px;
+  padding: 28px;
+  text-align: center;
 }
 
 .header {
-  font-size: 36px;
   padding: 16px;
   width: 100%;
   align-content: center;
   text-align: center;
+  height: 170px;
+}
+
+.header-text {
+  font-size: 36px;
 }
 
 .container {
-  display: flex;
-  flex: 1;
   height: 100%;
+  align-content: center;
+  margin-left: 128px;  
+  margin-right: 128px;  
 }
 
 .left-menu {
@@ -38,11 +75,12 @@ li {
   text-decoration: underline;
 }
 
-.canvas {
-  flex: 0.7;
-}
-
 .bottom {
   position: absolute;
   bottom: 32px;
+}
+
+.center {
+  height: 400px;
+  width: auto;
 }
