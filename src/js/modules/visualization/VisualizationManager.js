@@ -1,4 +1,5 @@
 import TestVisualization from './TestVisualization';
+import GrowingDots from './GrowingDots';
 
 export default class VisualizationManager {
 
@@ -15,12 +16,12 @@ export default class VisualizationManager {
     // Also, dont forget to add 'this' as paramter as this class supplies the data
     // to your visualization.
     this.visualizations = [
+      new GrowingDots(this),
       new TestVisualization(this),
     ];
   }
 
   next() {
-    console.log(this.filterVisualizations.length);
     this.currentIndex = (this.currentIndex + 1) % this.filterVisualizations.length;
   }
 
