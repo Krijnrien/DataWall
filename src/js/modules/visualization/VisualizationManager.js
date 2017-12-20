@@ -25,6 +25,22 @@ export default class VisualizationManager {
     this.currentIndex = (this.currentIndex + 1) % this.filterVisualizations.length;
   }
 
+  find(query) {
+    switch (query) {
+      case 'tron':
+        this.currentIndex = 0;
+        break;
+
+      case 'lines':
+        this.currentIndex = 1;
+        break;
+
+      default:
+        this.currentIndex = 0;
+        break;
+    }
+  }
+
   /* Getters and Setters */
   get filterVisualizations() {
     if (this.userPreferences.includes('all')) {

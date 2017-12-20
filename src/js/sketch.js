@@ -15,6 +15,14 @@ initializeService((sender, args) => {
   manager.previousData = Utillities.normalizeData(args.previousData);
 });
 
+function setupEventListeners() {
+  const animations = ['tron', 'lines'];
+
+  animations.forEach((animation) => {
+    document.getElementById(animation).onclick = () => manager.find(animation);
+  });
+}
+
 const sketch = (p5) => {
   window.p5 = p5;
 
@@ -31,12 +39,6 @@ const sketch = (p5) => {
     manager.current.show();
   };
 };
-
-function setupEventListeners() {
-  document.getElementById('tron').onclick = () => {
-    manager.next(); // find
-  };
-}
 
 export default sketch;
 
