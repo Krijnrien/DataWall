@@ -23,9 +23,7 @@ const sketch = (p5) => {
     canvas.parent('sketch');
     p5.frameRate(24);
 
-    document.getElementById('tron').onclick = () => {
-      manager.next();
-    };
+    setupEventListeners();
   };
 
   p5.draw = () => {
@@ -33,6 +31,12 @@ const sketch = (p5) => {
     manager.current.show();
   };
 };
+
+function setupEventListeners() {
+  document.getElementById('tron').onclick = () => {
+    manager.next(); // find
+  };
+}
 
 export default sketch;
 
