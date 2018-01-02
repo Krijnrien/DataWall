@@ -1,4 +1,4 @@
-class Particle {
+export default class Particle {
 
 	constructor(x0, y0, speed, color, diameter) {
 		this.x = x0;
@@ -7,16 +7,15 @@ class Particle {
 		this.alpha = 255;
 		this.speed = speed;
 
-		this.r = red(color);
-		this.b = blue(color);
+		this.r = p5.red(color);
+		this.b = p5.blue(color);
 	}
 
 	show() {
 
-		noStroke();
-		fill(this.r, 0, this.b, this.alpha);
-		ellipse(this.x, this.y, this.diameter);
-
+		p5.noStroke();
+		p5.fill(this.r, 0, this.b, this.alpha);
+		p5.ellipse(this.x, this.y, this.diameter);
 		this.update();
 	}
 
@@ -44,3 +43,5 @@ class Particle {
 	}
 
 }
+
+module.exports = Particle;

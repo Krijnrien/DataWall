@@ -8,6 +8,7 @@ import VisualizationManager from './modules/visualization/VisualizationManager';
 import Utillities from './modules/util/Utillities';
 
 const manager = new VisualizationManager();
+
 window.manager = manager; // for debugging purposes.
 
 initializeService((sender, args) => {
@@ -16,11 +17,17 @@ initializeService((sender, args) => {
 });
 
 function setupEventListeners() {
-  const animations = ['tron', 'lines'];
+  const animations = ['tron', 'dots', 'lines'];
 
   animations.forEach((animation) => {
     document.getElementById(animation).onclick = () => manager.find(animation);
   });
+}
+
+function forTron(){
+  if(manager.current.name == "Tron"){
+    manager.current.refresh();
+  }
 }
 
 const sketch = (p5) => {
@@ -32,11 +39,15 @@ const sketch = (p5) => {
     p5.frameRate(24);
 
     setupEventListeners();
+
+    setInterval(forTron, 20000);
   };
 
   p5.draw = () => {
     manager.current.update();
     manager.current.show();
+
+    //if((manager.current.name == "Tron")&&(manager.current.Devices.length <= 0)) manager.current.refresh();
   };
 };
 

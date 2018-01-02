@@ -1,5 +1,6 @@
 import TestVisualization from './TestVisualization';
 import GrowingDots from './GrowingDots';
+import Tron from './Tron';
 
 export default class VisualizationManager {
 
@@ -16,6 +17,7 @@ export default class VisualizationManager {
     // Also, dont forget to add 'this' as paramter as this class supplies the data
     // to your visualization.
     this.visualizations = [
+      new Tron(this),
       new GrowingDots(this),
       new TestVisualization(this),
     ];
@@ -31,10 +33,14 @@ export default class VisualizationManager {
         this.currentIndex = 0;
         break;
 
-      case 'lines':
+      case 'dots':
         this.currentIndex = 1;
         break;
 
+      case 'lines':
+        this.currentIndex = 2;
+        break; 
+      
       default:
         this.currentIndex = 0;
         break;

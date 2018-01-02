@@ -6,3 +6,4 @@ class Unit{
         this.processed = false;
     }
 }
+module.exports = Unit;
