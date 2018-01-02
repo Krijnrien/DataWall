@@ -1,42 +1,32 @@
-## DataWall 2017 Backend
+# DataWall 2017 Production [![Build Status](https://travis-ci.org/Krijnrien/DataWall.svg?branch=Production)](https://travis-ci.org/Krijnrien/DataWall)
 
-### Project setup
-1. Make sure you clone the project in your ```src``` folder in your ````GOPATH````. If you don't , the project won't be 
-able to link the different packages properly. 
-If you don't know where your ```GOPATH``` is, 
-open a terminal and run ```go env``` and search for ```GOPATH```.
+This is a cleaned version of the backend branch where only the features that are used are present.
 
-2. Now install all dependencies by going to the root of the repository and running ```go get .```.
-3. Make sure you have a cassandra database running.
-4. Create a keyspace in cassandra.
-```
-~ cqlsh
-> CREATE KEYSPACE data
-  WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 1};
-```
-5. Create a table to store the data in
-```
-> USE data;
-> CREATE TABLE locations(
-    loc_x float,
-    loc_y float,
-    loc_z int,
-    user_hash text,
-    createdAt timestamp,
-    PRIMARY KEY(user_hash, createdAt)
-  );
-```
-6. Now define your settings in the ```settings/settings.json``` file by adjusting the following values:
-```js
-{
-  "IpAddress": "127.0.0.1",   // The IP address of your cassandra database
-  "Keyspace": "data",         // The keyspace of your cassandra database
-  "ApiPort": 8081,            // The port on which the API will run
-  "Logging": true,            // Whether to show the logs or not
-  "Token": "Your token from https://api.fhict.nl/Documentation/ShowToken"
-}
+## Setup
 
-```
-7. Now add the following run configurations to your Gogland:
-![Api settings](https://i.imgur.com/B9JvX96.png)
-![Data Gatherer settings](https://i.imgur.com/omP6KVj.png)
+1. Clone the repository: `git clone git@github.com:Krijnrien/DataWall.git`
+1. Enter the directory: `cd DataWall`
+1. Go to the Production branch: `git checkout Production`
+1. Get all required dependencies: `go get .`
+1. Build the project: `go build .`
+1. Start the application: `./DataWall`
+
+## Arguments
+
+To view all arguments from the command line use the flag `-h`.
+
+## ToDo
+
+- [x] Automate getting the token
+- [x] Make a script that runs the whole setup
+- [ ] Add unit tests for more quality control
+- [x] Make users persistent. This means that instead of overwriting the cache each time, only change the coordinates for users that were already connected.
+
+## Contributing
+
+1. Make sure all code that is commited builds without errors and is formatted with `go fmt`.
+1. Update the README.md with details of changes to the application, this includes new environment variables, exposed ports and useful file locations.
+
+## Contributors
+
+[StefanPahlplatz](https://github.com/StefanPahlplatz) | [Krijnrien](https://github.com/Krijnrien) | [CPIJ](https://github.com/CPIJ) | [Martin Savov](https://github.com/MIT120) | [Hristiyan Tarnev](https://github.com/beasteca)
