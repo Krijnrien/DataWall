@@ -7,8 +7,8 @@ export default class Device {
 		this.y = y0;
 		this.hash = hash;
 
-		this.diameter = 10;							  // diameter of the device
-		this.speed = 0.7;								  // speed of movement of the device
+		this.diameter = 20;							  // diameter of the device
+		this.speed = 3;//0.7;								  // speed of movement of the device
 
 		if(p5.random(-1,1) >= 0) {
 			this.trailColor = p5.color(255,0,0); 		  // @trailColor: color variable
@@ -45,7 +45,7 @@ export default class Device {
 	show() {
 
 		// trail settings
-		if(!this.arrivedTo(this.units[0].x,this.units[0].y)) this.growTrail();
+		if(!this.arrived()) this.growTrail();
 		this.displayTrail();
 		this.changeColor();
 
@@ -160,8 +160,7 @@ export default class Device {
 	}
 
 	inDistanceOf(axis, xy){
-		let distance = 3;
-		let toReturn = false;
+		let distance = 8;
 
 		let check;
 
@@ -192,8 +191,14 @@ export default class Device {
 		}
 	}
 
-	arrivedTo(x1, y1){
+	arrived(){
+		let x1 = this.units[0].x;
+		let y1 = this.units[0].y;
 		return ((this.inDistanceOf("x", x1))&&(this.inDistanceOf("y",y1)));
+	}
+
+	finished(){
+		return (this.particles == 0)
 	}
 }
 

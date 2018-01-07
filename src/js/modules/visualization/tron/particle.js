@@ -20,22 +20,22 @@ export default class Particle {
 	}
 
 	update() {
-		// if(this.alpha > 200){
-		// 	this.alpha -= 1.2*this.speed;
-		// }
-		// else if(this.alpha > 150){
-		// 	this.alpha -= 1*this.speed;
-		// }
-		// else if(this.alpha > 100){
-		// 	this.alpha -= 0.8*this.speed;
-		// }
-		// else if(this.alpha > 50){
-		// 	this.alpha -= 0.5*this.speed;
-		// }
-		// else{
-		// 	this.alpha -= 0.3*this.speed;
-		// }
-		this.alpha -= this.speed;
+		if(this.alpha > 200){
+			this.alpha -= 1.2*this.speed;
+		}
+		else if(this.alpha > 150){
+			this.alpha -= 1*this.speed;
+		}
+		else if(this.alpha > 100){
+			this.alpha -= 0.8*this.speed;
+		}
+		else if(this.alpha > 50){
+			this.alpha -= 0.5*this.speed;
+		}
+		else{
+			this.alpha -= 0.3*this.speed;
+		}
+		//this.alpha -= this.speed;
 	}
 
 	finished() {

@@ -9,38 +9,53 @@ export default class Tron extends Visualization {
     super(manager);
     this.name = 'Tron';
     this.Devices = [];
-    this.Units = [];
+		this.Units = [];
   }
 
   refresh() {
-
 		if(this.Devices.length <= 0){
 			if(manager.previousData != null){
 				this.fetchToUnits(manager.previousData);
-			}
 		}
+	}
 
-    this.fetchToUnits(manager.currentData);
+  this.fetchToUnits(manager.currentData);
   }
 
   update() {
     this.Devices.forEach((device) => {
-        device.go();
-    });
-  }
+      device.go();
+		});
+
+		if(this.timeToRefresh()) this.refresh();
+	}
 
   show() {
     p5.clear();
     this.Devices.forEach((device) => {
-        device.show();
+      device.show();
     });
 
 
     p5.text(`${p5.frameRate().toFixed(2)} FPS`, 40, 40);
-  }
+	}
+	
+	timeToRefresh(){
 
-	// weird methods
-  fetchToUnits(data) {
+		let toReturn = true;
+
+		this.Devices.forEach((device) => {
+			if(!device.finished()) toReturn = false;
+		});
+
+		this.Devices.forEach((device) => {
+			if(!device.arrived()) toReturn = false;
+		});
+		
+		return toReturn;
+}
+
+	fetchToUnits(data) {
 
 		this.Units = [];
 		for(let i = Object.keys(data).length - 1; i >= 0; i--){
@@ -54,7 +69,7 @@ export default class Tron extends Visualization {
 			}
 		}
 
-		console.log("Expected number of units: " + this.Units.length);
+		//console.log("Expected number of units: " + this.Units.length);
 		
 		if(this.Devices.length == 0) this.breakDownUnitsToDevices(this.Units);
 		else this.updateDestinations(this.Units);
@@ -86,7 +101,7 @@ export default class Tron extends Visualization {
 			if(deviceWasCreated) this.Devices.push(newDevice);
 		}
 		//console.log("BRK- Devices length: " + Devices.length + " Max:  " + findMax(Devices) + " Units: " + getTotalUnits(Devices));
-		console.log("Max: " + this.findMax(this.Devices));
+		//console.log("Max: " + this.findMax(this.Devices));
   }
 
   onSameLocation(device, unit){

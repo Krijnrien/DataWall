@@ -24,12 +24,6 @@ function setupEventListeners() {
   });
 }
 
-function forTron(){
-  if(manager.current.name == "Tron"){
-    manager.current.refresh();
-  }
-}
-
 const sketch = (p5) => {
   window.p5 = p5;
 
@@ -39,15 +33,11 @@ const sketch = (p5) => {
     p5.frameRate(24);
 
     setupEventListeners();
-
-    setInterval(forTron, 20000);
   };
 
   p5.draw = () => {
     manager.current.update();
     manager.current.show();
-
-    //if((manager.current.name == "Tron")&&(manager.current.Devices.length <= 0)) manager.current.refresh();
   };
 };
 
