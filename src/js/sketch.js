@@ -17,7 +17,7 @@ initializeService((sender, args) => {
 });
 
 function setupEventListeners() {
-  const animations = ['tron', 'dots', 'lines'];
+  const animations = ['tron', 'dots', 'lines', 'vertex'];
 
   animations.forEach((animation) => {
     document.getElementById(animation).onclick = () => manager.find(animation);
@@ -42,4 +42,3 @@ const sketch = (p5) => {
 };
 
 export default sketch;
-

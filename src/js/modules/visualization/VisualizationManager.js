@@ -1,9 +1,9 @@
 import TestVisualization from './TestVisualization';
 import GrowingDots from './GrowingDots';
 import Tron from './Tron';
+import Vertexes from './Vertexes';
 
 export default class VisualizationManager {
-
   constructor() {
     this._currentData = [];
     this._previousData = [];
@@ -20,11 +20,13 @@ export default class VisualizationManager {
       new Tron(this),
       new GrowingDots(this),
       new TestVisualization(this),
+      new Vertexes(this),
     ];
   }
 
   next() {
-    this.currentIndex = (this.currentIndex + 1) % this.filterVisualizations.length;
+    this.currentIndex =
+      (this.currentIndex + 1) % this.filterVisualizations.length;
   }
 
   find(query) {
@@ -39,8 +41,12 @@ export default class VisualizationManager {
 
       case 'lines':
         this.currentIndex = 2;
-        break; 
-      
+        break;
+
+      case 'vertex':
+        this.currentIndex = 3;
+        break;
+
       default:
         this.currentIndex = 0;
         break;
@@ -53,7 +59,9 @@ export default class VisualizationManager {
       return this.visualizations;
     }
 
-    return this.visualizations.filter(v => this.userPreferences.includes(v.name));
+    return this.visualizations.filter(v =>
+      this.userPreferences.includes(v.name),
+    );
   }
 
   get current() {
