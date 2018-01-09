@@ -39,7 +39,7 @@ export default class VisualizationManager {
         this.currentIndex = 1;
         break;
 
-      case 'lines':
+      case 'drops':
         this.currentIndex = 2;
         break;
 

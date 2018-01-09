@@ -4,11 +4,12 @@ body{
   background: #272626;
   overflow:hidden;
   color: white;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif;  
 }
 
 .options {
   margin-top: 64px;
+  margin-left: 5%;
 }
 
 .options ul {
@@ -16,7 +17,7 @@ body{
 }
 
 .options li {
-  margin:0 96px 64px 0;
+  margin: 0 96px 64px 0;
   cursor: pointer;
   display: inline;
 }
@@ -57,10 +58,10 @@ body{
 }
 
 .container {
-  height: 100%;
+  width: 100%;
   align-content: center;
-  margin-left: 128px;  
-  margin-right: 128px;  
+  margin-left: 0px;  
+  margin-right: 128px;
 }
 
 .left-menu {
@@ -68,7 +69,6 @@ body{
   padding: 48px;
   max-width: 200px;
   text-align: center;
-  
 }
 
 .menu {
@@ -81,6 +81,6 @@ body{
 }
 
 .center {
-  height: 400px;
+  height: 100%;
   width: auto;
 }

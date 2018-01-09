@@ -17,7 +17,7 @@ initializeService((sender, args) => {
 });
 
 function setupEventListeners() {
-  const animations = ['tron', 'dots', 'lines', 'vertex'];
+  const animations = ['tron', 'dots', 'drops', 'vertex'];
 
   animations.forEach((animation) => {
     document.getElementById(animation).onclick = () => manager.find(animation);

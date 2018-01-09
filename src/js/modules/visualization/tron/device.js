@@ -7,7 +7,7 @@ export default class Device {
 		this.y = y0;
 		this.hash = hash;
 
-		this.diameter = 20;							  // diameter of the device
+		this.diameter = 13;							  // diameter of the device
 		this.speed = 3;//0.7;								  // speed of movement of the device
 
 		if(p5.random(-1,1) >= 0) {
@@ -22,10 +22,10 @@ export default class Device {
 		this.lastChangedColorTime = 0;				  // keeps track of last change of color
 		this.colorChangeSpeed = 20;					  // speed of color change of the device (lower -> slower)
 
-		this.deviceColor = p5.color(255, 255, 255);		  // color of the device
+		this.deviceColor = p5.color(225, 225, 225);		  // color of the device
 
 		this.particles = [];						  // stores particles representing trail of the device
-		this.particleFrequency = 7; 				  // per how many frames new particle appears
+		this.particleFrequency = 5; 				  // per how many frames new particle appears
 		this.particleCounter = 0;					  // helps to control particles
 
 		this.changeDirectionPeriod = p5.random(50, 150); // How often device should change direction

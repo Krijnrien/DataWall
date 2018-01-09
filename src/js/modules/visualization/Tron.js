@@ -5,39 +5,36 @@ import Unit from './tron/unit';
 export default class Tron extends Visualization {
     
 
-  constructor(manager) {
-    super(manager);
-    this.name = 'Tron';
-    this.Devices = [];
+	constructor(manager) {
+		super(manager);
+		this.name = 'Tron';
+		this.Devices = [];
 		this.Units = [];
-  }
+	}
 
-  refresh() {
+	refresh() {
 		if(this.Devices.length <= 0){
 			if(manager.previousData != null){
 				this.fetchToUnits(manager.previousData);
+			}
 		}
+
+  		this.fetchToUnits(manager.currentData);
 	}
 
-  this.fetchToUnits(manager.currentData);
-  }
-
-  update() {
-    this.Devices.forEach((device) => {
-      device.go();
-		});
+	update() {
+		this.Devices.forEach((device) => {
+		device.go();
+			});
 
 		if(this.timeToRefresh()) this.refresh();
 	}
 
-  show() {
-    p5.clear();
-    this.Devices.forEach((device) => {
-      device.show();
-    });
-
-
-    p5.text(`${p5.frameRate().toFixed(2)} FPS`, 40, 40);
+	show() {
+		p5.clear();
+		this.Devices.forEach((device) => {
+		device.show();
+		});
 	}
 	
 	timeToRefresh(){
@@ -53,7 +50,7 @@ export default class Tron extends Visualization {
 		});
 		
 		return toReturn;
-}
+	}
 
 	fetchToUnits(data) {
 
@@ -73,9 +70,9 @@ export default class Tron extends Visualization {
 		
 		if(this.Devices.length == 0) this.breakDownUnitsToDevices(this.Units);
 		else this.updateDestinations(this.Units);
-  }
+	}
 
-  breakDownUnitsToDevices(units) {
+	breakDownUnitsToDevices(units) {
 
 		for(let i = units.length - 1; i >= 0; i--){
 
@@ -102,9 +99,9 @@ export default class Tron extends Visualization {
 		}
 		//console.log("BRK- Devices length: " + Devices.length + " Max:  " + findMax(Devices) + " Units: " + getTotalUnits(Devices));
 		//console.log("Max: " + this.findMax(this.Devices));
-  }
+	}
 
-  onSameLocation(device, unit){
+	onSameLocation(device, unit){
 
 		let distance = 5;
 		let xdif = Math.abs(device.x - unit.x);
@@ -114,9 +111,9 @@ export default class Tron extends Visualization {
 			if (ydif <= distance) return true;
 		}
 		return false;
-  }
+	}
 
-  updateDestinations(newunits){
+	updateDestinations(newunits){
 
 		let newDevices = [];
 		for(let i = this.Devices.length - 1; i >= 0; i--){
