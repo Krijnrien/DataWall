@@ -35,6 +35,8 @@ export default class Tron extends Visualization {
 		this.Devices.forEach((device) => {
 		device.show();
 		});
+
+		p5.text(`${p5.frameRate().toFixed(2)} FPS`, 40, 40);
 	}
 	
 	timeToRefresh(){
