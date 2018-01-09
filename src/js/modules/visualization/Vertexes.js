@@ -9,30 +9,14 @@ export default class Vertexes extends Visualization {
     this.name = 'Vertexes';
     this.Circles = [];
   }
-
-  refresh() {
-    if (this.Circles.length <= 0) {
-      if (manager.previousData != null) {
-        this.fetchToCircles(manager.previousData);
-      }
-    }
-
-    this.fetchToCircles(manager.currentData);
-  }
-
-  update() {}
-
   show() {
     p5.clear();
 
     if (this.Circles.length <= 0) {
-      if (manager.previousData != null) {
-        this.fetchToCircles(manager.previousData);
+      if (manager.currentData != null) {
+        this.fetchToCircles(manager.currentData);
       }
     }
-
-    this.fetchToCircles(manager.currentData);
-
     for (let j = 0; j < this.Circles.length; j++) {
       for (let k = 0; k < this.Circles.length; k++) {
         if (
@@ -56,21 +40,18 @@ export default class Vertexes extends Visualization {
         }
       }
     }
-
     this.Circles.forEach((circle) => {
       const r = p5.random(255);
       const g = p5.random(255);
       const b = p5.random(255);
-
+      p5.noStroke();
       p5.fill(r, g, b);
       p5.ellipse(circle.x, circle.y, 10);
     });
-
     p5.text(`${p5.frameRate().toFixed(2)} FPS`, 40, 40);
   }
-
   fetchToCircles(data) {
-    this.Circles = [];
+    // this.Circles = [];
     for (let i = Object.keys(data).length - 1; i >= 0; i--) {
       if (data[i].floor == 0) {
         const currentCircle = data[i];
