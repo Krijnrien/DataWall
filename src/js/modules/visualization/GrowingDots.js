@@ -37,7 +37,10 @@ export default class GrowingDots extends Visualization {
         if (differenceX > -6 && differenceX < 6 && differenceY > -6 && differenceY < 6){
           // Instead of p5.frameCount an actual counter that tracks the size could be used. 
           // Since there is no API available that receives real data, this is being used as a replacement for the demo.
-          var sizeCounter = p5.frameCount / 2;
+          var sizeCounter = p5.frameCount / 4;
+          if (sizeCounter>100){
+            sizeCounter = 100;
+          }
 
           p5.ellipse(device.current.x, device.current.y, sizeCounter);
         }
