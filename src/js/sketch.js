@@ -18,9 +18,14 @@ initializeService((sender, args) => {
 
 function setupEventListeners() {
   const animations = ['tron', 'dots', 'drops', 'vertex'];
-
+  const floors = ['f0', 'f1', 'f2', 'f3'];
   animations.forEach((animation) => {
     document.getElementById(animation).onclick = () => manager.find(animation);
+  });
+  floors.forEach((floor) => {
+    document.getElementById(floor).onclick = () => {
+      manager.floor = parseInt(floor.slice(1), 10);
+    };
   });
 }
 

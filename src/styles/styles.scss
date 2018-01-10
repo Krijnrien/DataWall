@@ -1,10 +1,10 @@
 @import 'reset';
 
-body{
+body {
   background: #272626;
-  overflow:hidden;
+  overflow: hidden;
   color: white;
-  font-family: 'Montserrat', sans-serif;  
+  font-family: 'Montserrat', sans-serif;
 }
 
 .options {
@@ -44,6 +44,28 @@ body{
   padding: 28px;
   text-align: center;
 }
+.badge2 {
+  border: 2px solid white;
+  /* one half of ( (border * 2) + height + padding ) */
+  box-shadow: 1px 1px 1px black;
+  color: white;
+  height: 24px;
+  width: 24px;
+  padding: 28px;
+  text-align: center;
+}
+
+.badge2:hover {
+  border: 2px solid white;
+  /* one half of ( (border * 2) + height + padding ) */
+  box-shadow: 1px 1px 1px black;
+  color: rgb(0, 0, 0);
+  background-color: white;
+  height: 24px;
+  width: 24px;
+  padding: 28px;
+  text-align: center;
+}
 
 .header {
   padding: 16px;
@@ -58,9 +80,9 @@ body{
 }
 
 .container {
-  width: 100%;
+  width: 70%;
   align-content: center;
-  margin-left: 0px;  
+  margin-left: 0px;
   margin-right: 128px;
 }
 

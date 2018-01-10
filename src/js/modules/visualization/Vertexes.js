@@ -9,6 +9,7 @@ export default class Vertexes extends Visualization {
     this.name = 'Vertexes';
     this.Circles = [];
   }
+
   show() {
     p5.clear();
 
@@ -17,6 +18,8 @@ export default class Vertexes extends Visualization {
         this.fetchToCircles(manager.currentData);
       }
     }
+    // this.fetchToCircles(manager.currentData);
+
     for (let j = 0; j < this.Circles.length; j++) {
       for (let k = 0; k < this.Circles.length; k++) {
         if (
@@ -48,7 +51,7 @@ export default class Vertexes extends Visualization {
       p5.fill(r, g, b);
       p5.ellipse(circle.x, circle.y, 10);
     });
-    p5.text(`${p5.frameRate().toFixed(2)} FPS`, 40, 40);
+    // p5.text(`${p5.frameRate().toFixed(2)} FPS`, 40, 40);
   }
   fetchToCircles(data) {
     // this.Circles = [];
