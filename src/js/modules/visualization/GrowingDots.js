@@ -22,7 +22,6 @@ export default class GrowingDots extends Visualization {
   show() {
 
     p5.clear();
-
     this.objectHistory.forEach((device) => {
 
       if (device.current.userType === 1) {
@@ -36,7 +35,9 @@ export default class GrowingDots extends Visualization {
         const differenceX = device.current.x - device.previous.x;
         const differenceY = device.current.y - device.previous.y;
         if (differenceX > -6 && differenceX < 6 && differenceY > -6 && differenceY < 6){
-          p5.ellipse(device.current.x, device.current.y, 10);
+          // Instead of p5.frameCount an actual counter that tracks the size could be used. 
+          // Since there is no API available that receives real data, this is being used as a replacement for the demo.
+          p5.ellipse(device.current.x, device.current.y, p5.frameCount);
         }
       }
     });
