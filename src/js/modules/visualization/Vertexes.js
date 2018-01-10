@@ -12,13 +12,10 @@ export default class Vertexes extends Visualization {
 
   show() {
     p5.clear();
+    // this.refresh();
 
-    if (this.Circles.length <= 0) {
-      if (manager.currentData != null) {
-        this.fetchToCircles(manager.currentData);
-      }
-    }
-    // this.fetchToCircles(manager.currentData);
+    // this.fetchToUnits(manager.currentData);
+    this.fetchToCircles(manager.currentData);
 
     for (let j = 0; j < this.Circles.length; j++) {
       for (let k = 0; k < this.Circles.length; k++) {
@@ -43,6 +40,7 @@ export default class Vertexes extends Visualization {
         }
       }
     }
+
     this.Circles.forEach((circle) => {
       const r = p5.random(255);
       const g = p5.random(255);
@@ -52,19 +50,15 @@ export default class Vertexes extends Visualization {
       p5.ellipse(circle.x, circle.y, 10);
     });
     // p5.text(`${p5.frameRate().toFixed(2)} FPS`, 40, 40);
+    // this.Circles.clear();
   }
   fetchToCircles(data) {
-    // this.Circles = [];
-    for (let i = Object.keys(data).length - 1; i >= 0; i--) {
-      if (data[i].floor == 0) {
-        const currentCircle = data[i];
-        const temp = new Circle(
-          currentCircle.x * 2.3,
-          currentCircle.y * 2.3,
-          4,
-        );
-        this.Circles.push(temp);
-      }
+    this.Circles = [];
+
+    for (let i = manager.currentData.length - 1; i >= 0; i--) {
+      const currentCircle = manager.currentData[i];
+      const temp = new Circle(currentCircle.x * 2.3, currentCircle.y * 2.3, 4);
+      this.Circles.push(temp);
     }
   }
 }
