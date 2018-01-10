@@ -8,7 +8,7 @@ export default class Device {
 		this.hash = hash;
 
 		this.diameter = 13;							  // diameter of the device
-		this.speed = 3;//0.7;								  // speed of movement of the device
+		this.speed = 7;//0.7;								  // speed of movement of the device
 
 		if(p5.random(-1,1) >= 0) {
 			this.trailColor = p5.color(255,0,0); 		  // @trailColor: color variable
@@ -25,7 +25,7 @@ export default class Device {
 		this.deviceColor = p5.color(225, 225, 225);		  // color of the device
 
 		this.particles = [];						  // stores particles representing trail of the device
-		this.particleFrequency = 5; 				  // per how many frames new particle appears
+		this.particleFrequency = 2; 				  // per how many frames new particle appears
 		this.particleCounter = 0;					  // helps to control particles
 
 		this.changeDirectionPeriod = p5.random(50, 150); // How often device should change direction

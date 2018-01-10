@@ -35,6 +35,8 @@ export default class Tron extends Visualization {
 		this.Devices.forEach((device) => {
 		device.show();
 		});
+
+		//p5.text(`${p5.frameRate().toFixed(2)} FPS`, 40, 40);
 	}
 	
 	timeToRefresh(){
@@ -56,14 +58,11 @@ export default class Tron extends Visualization {
 
 		this.Units = [];
 		for(let i = Object.keys(data).length - 1; i >= 0; i--){
-			console.log("Current id: " + data[i].floor);
-
-			if(data[i].floor == 0){
+			//console.log("Current id: " + data[i].floor);
 
 				let currentDevice = data[i];
 				let temp = new Unit(currentDevice.x, currentDevice.y, currentDevice.hash);
 				this.Units.push(temp);
-			}
 		}
 
 		//console.log("Expected number of units: " + this.Units.length);

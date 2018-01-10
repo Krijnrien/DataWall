@@ -49,10 +49,11 @@ body {
   /* one half of ( (border * 2) + height + padding ) */
   box-shadow: 1px 1px 1px black;
   color: white;
-  height: 24px;
-  width: 24px;
+  height: 10px;
+  width: 10px;
   padding: 28px;
   text-align: center;
+  background-color: #272626;
 }
 
 .badge2:hover {
@@ -61,8 +62,8 @@ body {
   box-shadow: 1px 1px 1px black;
   color: rgb(0, 0, 0);
   background-color: white;
-  height: 24px;
-  width: 24px;
+  height: 10px;
+  width: 10px;
   padding: 28px;
   text-align: center;
 }
