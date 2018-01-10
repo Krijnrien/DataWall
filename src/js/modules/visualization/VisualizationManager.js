@@ -19,7 +19,6 @@ export default class VisualizationManager {
     this.visualizations = [
       new Tron(this),
       new GrowingDots(this),
-      new TestVisualization(this),
       new Vertexes(this),
     ];
   }
@@ -39,12 +38,8 @@ export default class VisualizationManager {
         this.currentIndex = 1;
         break;
 
-      case 'drops':
-        this.currentIndex = 2;
-        break;
-
       case 'vertex':
-        this.currentIndex = 3;
+        this.currentIndex = 2;
         break;
 
       default:
