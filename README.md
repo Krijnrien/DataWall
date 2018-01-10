@@ -19,7 +19,7 @@ To view all arguments from the command line use the flag `-h`.
 
 - [x] Automate getting the token
 - [x] Make a script that runs the whole setup
-- [ ] Add unit tests for more quality control
+- [ ] Add more unit tests for more quality control
 - [x] Make users persistent. This means that instead of overwriting the cache each time, only change the coordinates for users that were already connected.
 
 ## Contributing
