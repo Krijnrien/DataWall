@@ -25,9 +25,11 @@ function setupEventListeners() {
   floors.forEach((floor) => {
     document.getElementById(floor).onclick = () => {
       manager.floor = parseInt(floor.slice(1), 10);
+      if(manager.current.name=="Tron") manager.current.refresh();
     };
   });
 }
+
 
 const sketch = (p5) => {
   window.p5 = p5;
